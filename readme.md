@@ -113,9 +113,12 @@ flowchart TD
 
 ```text
 youtube-progress-indicator/
+├── icons/             # Extension icons (16x16, 32x32, 48x48, 128x128, 512x512)
 ├── manifest.json      # Manifest V3 configuration and content script declarations
 ├── content.js         # Header docking, drag-and-drop engine, video event listeners
 ├── styles.css         # Header pill styles, floating glassmorphism, dragging feedback
+├── scripts/           # Asset generation tools
+│   └── generate_icons.py
 └── readme.md          # Full documentation, architecture breakdown, and setup guide
 ```
 
