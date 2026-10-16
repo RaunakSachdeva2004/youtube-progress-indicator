@@ -1,69 +1,77 @@
 /* YouTube Video Progress Percentage Indicator - Styles */
 
-/* Ensure player containers establish a positioning context */
-#movie_player,
-#shorts-player,
-.html5-video-player {
-  position: relative;
-}
-
-/* Main indicator container inside the top-right corner of the player */
+/* Main indicator container - Docked in masthead left of Create button */
 #yt-watch-progress-indicator {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  z-index: 65; /* Above video and watermarks, below YouTube settings popups/menus */
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   box-sizing: border-box;
-  width: 132px;
-  min-width: 110px;
-  max-width: min(150px, calc(100% - 24px));
-  padding: 6px 10px 7px 10px;
-  background-color: #000000;
-  background-color: rgba(0, 0, 0, 0.84);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.55);
-  pointer-events: none;
+  height: 36px;
+  min-width: 66px;
+  padding: 4px 10px 5px 10px;
+  margin: 0 8px 0 0;
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 18px;
+  cursor: grab;
   user-select: none;
   -webkit-user-select: none;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  line-height: 1.2;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  opacity: 1;
-  transition: none;
+  touch-action: none;
+  pointer-events: auto;
+  font-family: Roboto, "YouTube Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.1;
+  gap: 3px;
+  z-index: 2021; /* Above masthead container (2020) */
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
 }
 
-/* Hidden state when no valid video is loaded */
+#yt-watch-progress-indicator:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Hidden state when no active video or page is unsupported */
 #yt-watch-progress-indicator.yt-progress-indicator--hidden {
   display: none !important;
 }
 
-/* Top row containing percentage label */
-#yt-watch-progress-indicator .yt-progress-indicator__row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
+/* Floating mode when dragged to a custom spot */
+#yt-watch-progress-indicator.yt-progress-indicator--floating {
+  position: fixed !important;
+  z-index: 999999 !important;
+  margin: 0 !important;
+  background-color: rgba(18, 18, 18, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
-/* Bright red percentage text */
+/* Dragging state with active grabbing cursor */
+#yt-watch-progress-indicator.yt-progress-indicator--dragging {
+  cursor: grabbing !important;
+  transform: scale(1.05);
+  box-shadow: 0 8px 24px rgba(255, 0, 0, 0.35), 0 4px 16px rgba(0, 0, 0, 0.85);
+}
+
+/* Pure percentage text (e.g. "24.3%") without "Watched:" prefix */
 #yt-watch-progress-indicator .yt-progress-indicator__text {
   color: #FF0000;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.2px;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1;
 }
 
 /* Thin horizontal progress track */
 #yt-watch-progress-indicator .yt-progress-indicator__track {
   width: 100%;
   height: 3px;
-  background-color: #383838;
+  background-color: rgba(255, 255, 255, 0.22);
   border-radius: 999px;
   overflow: hidden;
 }
@@ -74,38 +82,5 @@
   height: 100%;
   background-color: #FF0000;
   border-radius: 999px;
-}
-
-/* Shorts player adjustment so it stays clear of top-right Shorts controls */
-#yt-watch-progress-indicator.yt-progress-indicator--shorts {
-  top: 56px;
-  right: 12px;
-  width: 120px;
-}
-
-/* Compact adaptation when the video player itself is narrow (e.g. small window or miniplayer) */
-#yt-watch-progress-indicator.yt-progress-indicator--compact {
-  top: 8px;
-  right: 8px;
-  width: 110px;
-  padding: 4px 8px 5px 8px;
-  gap: 4px;
-}
-
-#yt-watch-progress-indicator.yt-progress-indicator--compact .yt-progress-indicator__text {
-  font-size: 11px;
-}
-
-/* Responsive fallback for narrow viewports */
-@media (max-width: 640px) {
-  #yt-watch-progress-indicator {
-    top: 8px;
-    right: 8px;
-    width: 114px;
-    padding: 5px 8px 6px 8px;
-  }
-
-  #yt-watch-progress-indicator .yt-progress-indicator__text {
-    font-size: 11px;
-  }
+  transition: width 0.15s linear;
 }
